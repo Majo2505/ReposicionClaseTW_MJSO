@@ -7,10 +7,10 @@ namespace EC4clase1.Models
         public Guid Id { get; set; }
 
         [Required, EmailAddress]
-        public string Email { get; set; } = string.Empty;
-        public string UserName { get; set; } = string.Empty;
+        public string Email { get; set; }
+        public string UserName { get; set; } 
         [Required]
         public string PasswordHash  { get; set; }
-
+        public string Role { get; set; } = "User";
     }
 }

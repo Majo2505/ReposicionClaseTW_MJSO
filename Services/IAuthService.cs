@@ -5,7 +5,7 @@ namespace EC4clase1.Services
 {
     public interface IAuthService
     {
-        //Task<string> LoginAsync(LoginDto dto);
+        Task<(bool ok ,string? token)> LoginAsync(LoginDto dto);
         Task<UserResponse> LoginAsync1(LoginDto loginDto);
         Task<UserResponse> RegisterAsync(RegisterDto registerDto);
         Task<bool> VerifyCredentials(LoginDto loginDto);

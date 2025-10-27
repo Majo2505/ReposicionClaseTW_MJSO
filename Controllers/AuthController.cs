@@ -17,20 +17,26 @@ namespace EC4clase1.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             var result = await _authService.RegisterAsync(dto);
-            return CreatedAtAction(nameof(Register), result);
+            //return CreatedAtAction(nameof(Register), result);
+            return CreatedAtAction(nameof(Register), new { id = result }, null);
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            var isvalid = await _authService.VerifyCredentials(dto);
-            if(!isvalid)
+            var (ok, token) = await _authService.LoginAsync(dto);
+            if(!ok)
             {
                 return Unauthorized();
             }
-            return Ok(dto);
+            //var isvalid = await _authService.VerifyCredentials(dto);
+            //if(!isvalid)
+            //{
+            //    return Unauthorized();
+            //}
+            return Ok(new {acces_token = token , token_type = "Bearer"});
             //try
             //{
-            //    var result = await _authService.LoginAsync(dto);
+            //    var result = await _authService.LoginAsync1(dto);
             //    //return CreatedAtAction(nameof(Login), result); // asi estaba en clases //mgr no debería ser solo Ok(result) pq solo estamos comparando y no creando un nuevo objeto
             //    return Ok(result);
             //}
