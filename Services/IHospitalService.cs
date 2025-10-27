@@ -8,5 +8,8 @@ namespace EC4clase1.Services
         Task<IEnumerable<Hospital>> GetAll(); //me devuelve una lista de hospitales
         Task<Hospital> GetOne(Guid id); //me devuelve UN objeto de hospital
         Task<Hospital> CreateHospital(CreateHospitalDto dto);
+        Task<Hospital> UpdateHospital(UpdateHospitalDto dto);
+        Task<bool> DeleteHospital(Guid id);
+        Task<IEnumerable<Hospital>> GetTypes1and3();
     }
 }

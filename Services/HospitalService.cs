@@ -25,6 +25,14 @@ namespace EC4clase1.Services
             
         }
 
+        public async Task<bool> DeleteHospital(Guid id)
+        {
+            var exists = await _repository.GetOne(id);
+            if (exists == null) return false;
+            await _repository.Delete(exists);
+            return true;
+        }
+
         public async Task<IEnumerable<Hospital>> GetAll()
         {
             return await _repository.GetAll();
@@ -32,7 +40,25 @@ namespace EC4clase1.Services
 
         public async Task<Hospital> GetOne(Guid id)
         {
-            return await _repository.GetOne(id);
+            var hospital = await _repository.GetOne(id);
+            if (hospital == null) return null;
+            return hospital;
+        }
+
+        public async Task<IEnumerable<Hospital>> GetTypes1and3()
+        {
+            return await _repository.GetByTypes(new int[] { 1, 3 });
+        }
+
+        public async Task<Hospital> UpdateHospital(UpdateHospitalDto dto)
+        {
+            var hospital = await _repository.GetOne(dto.Id);
+            if (hospital == null) return null;
+            hospital.Name = dto.Name;
+            hospital.Address = dto.Address;
+            hospital.Type = dto.Type;
+            await _repository.Update(hospital);
+            return hospital;
         }
     }
 }

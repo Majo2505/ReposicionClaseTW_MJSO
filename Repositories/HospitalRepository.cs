@@ -17,14 +17,31 @@ namespace EC4clase1.Repositories
             await _db.SaveChangesAsync();
         }
 
+        public async Task Delete(Hospital hospital)
+        {
+            _db.Hospitals.Remove(hospital);
+            await _db.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Hospital>> GetAll()
         {
             return await _db.Hospitals.ToListAsync();
         }
 
+        public async Task<IEnumerable<Hospital>> GetByTypes(int[] types)
+        {
+            return await _db.Hospitals.Where(h => types.Contains(h.Type)).ToListAsync();
+        }
+
         public async Task<Hospital?> GetOne(Guid id)
         {
             return await _db.Hospitals.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task Update(Hospital hospital)
+        {
+            _db.Hospitals.Update(hospital);
+            await _db.SaveChangesAsync();
         }
     }
 }
